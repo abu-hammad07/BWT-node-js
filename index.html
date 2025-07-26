@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Select</title>
+    <style>
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-selected {
+            padding: 10px 30px 10px 12px;
+            border: 2px solid #cfcfcf;
+            border-radius: 8px;
+            background-color: #fff;
+            cursor: pointer;
+            color: #6b7280;
+            font-size: 15px;
+            font-weight: 400;
+            position: relative;
+        }
+
+        .select-selected:after {
+            content: '▼';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 8px;
+        }
+
+        .select-items {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 2px solid #cfcfcf;
+            border-top: none;
+            border-radius: 0.9rem;
+            background-color: #fff;
+            z-index: 99;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .select-items div {
+            padding: 8px 12px;
+            background-color: #f3f4f6;
+            color: #374151;
+            font-size: 15px;
+        }
+
+        .select-items div:hover {
+            background-color: #d1d5db; /* Gray on hover instead of blue */
+            color: #1f2937;
+        }
+
+        .same-as-selected {
+            background-color: #d1d5db;
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-select">
+        <div class="select-selected" onclick="toggleDropdown()">Choose one</div>
+        <div class="select-items">
+            <div onclick="selectOption('shoes')">Shoes</div>
+            <div onclick="selectOption('shirts')">Shirts</div>
+            <div onclick="selectOption('pants')">Pants</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            const items = document.querySelector('.select-items');
+            items.style.display = items.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function selectOption(value) {
+            const selected = document.querySelector('.select-selected');
+            selected.textContent = value;
+            toggleDropdown();
+            console.log('Selected value: ', value);
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const select = document.querySelector('.custom-select');
+            if (!select.contains(event.target)) {
+                document.querySelector('.select-items').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
